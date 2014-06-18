@@ -120,36 +120,39 @@ angular.module('starter.controllers', [])
         connectionIsOnline = 'undefined',
         connectionIsOffline = 'undefined';
 
-    $scope.connectiontype = connectionType;
+    $scope.connectionType = connectionType;
     $scope.connectionIsOnline = connectionIsOnline;
     $scope.connectionIsOffline = connectionIsOffline;
 
-    // we are here to show when it breaks being used/called outside a function
-    try {
-      $log.log($cordovaNetwork.getNetwork());
-      $scope.connectiontype = $cordovaNetwork.getNetwork();
-    } catch (e) {
-      $log.log('$cordovaNetwork.getNetwork()', e);
-    };
+    $cordovaNetwork.getNetwork().then( function(networkType) {
+      $log.log(networkType);
+      $scope.connectionType = networkType;
+    });
 
-    try {
-      $log.log($cordovaNetwork.isOnline());
-      $scope.connectionIsOnline = $cordovaNetwork.isOnline();
-    } catch (e) {
-      $log.log('$cordovaNetwork.isOnline()', e);
-    };
+    $cordovaNetwork.isOnline().then( function(isOnline) {
+      $log.log(isOnline);
+      $scope.connectionIsOnline = isOnline;
+    });
 
-    try {
-      $log.log($cordovaNetwork.isOffline());
-      $scope.connectionIsOffline = $cordovaNetwork.isOffline();
-    } catch (e) {
-      $log.log('$cordovaNetwork.isOffline()', e);
-    };
+    $cordovaNetwork.isOffline().then( function(isOffline) {
+      $log.log(isOffline);
+      $scope.connectionIsOffline = isOffline;
+    });
 
     $scope.connectionStatus = function () {
-      $scope.connectiontype = $cordovaNetwork.getNetwork();
-      $scope.connectionIsOnline = $cordovaNetwork.isOnline();
-      $scope.connectionIsOffline = $cordovaNetwork.isOffline();
+
+      $cordovaNetwork.getNetwork().then( function(networkType) {
+        $scope.connectionType = networkType;
+      });
+
+      $cordovaNetwork.isOnline().then( function(isOnline) {
+        $scope.connectionIsOnline = isOnline;
+      });
+
+      $cordovaNetwork.isOffline().then( function(isOffline) {
+        $scope.connectionIsOffline = isOffline;
+      });
+      
     };
     
   })
