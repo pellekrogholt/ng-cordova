@@ -39,6 +39,12 @@ Contacts Plugin
 cordova plugin add org.apache.cordova.contacts
 ```
 
+DatePicker Plugin
+
+```
+cordova plugin add https://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git
+```
+
 Device Plugin
 
 ```
@@ -165,15 +171,15 @@ module.controller('BarcodeScannerCtrl', function($scope, $cordovaBarcodeScanner)
 
     });
   };
-  
+
   // NOTE: encoding not functioning yet
   $scope.encodeData = function() {
     $cordovaBarcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com").then(function(success) {
-      // Success! 
+      // Success!
     }, function(err) {
       // An error occured. Show a message to the user
 
-    });      
+    });
   }
 });
 ```
@@ -230,6 +236,23 @@ module.controller('MyCtrl', function($scope, $cordovaContacts) {
 ```
 
 
+### `$cordovaDatePicker`
+
+Show a native date or time picker widget.
+
+```javascript
+module.controller('MyCtrl', function($scope, $cordovaDatePicker) {
+  $cordovaDatePicker.show(
+    {date: new Date(), mode: 'date'},
+    function(date){
+      alert(date);
+    };
+  );
+});
+```
+
+
+
 ### `$cordovaDevice`
 
 Grab device related information, such as platform, and device model.
@@ -255,16 +278,16 @@ Get access to the device's accelerometer.
 module.controller('DeviceMotionCtrl', function($scope, $cordovaDeviceMotion) {
   $scope.getAcceleration = function () {
   	$cordovaDeviceMotion.getCurrentAcceleration().then(function(result) {
-      // Success! 
+      // Success!
     }, function(err) {
       // An error occured. Show a message to the user
 
     });
   };
-  
+
   $scope.watchAcceleration = function () {
   	var options = { frequency: 3000 };  // Update every 3 seconds
-  	
+
   	$cordovaDeviceMotion.watchAcceleration(options).then(function(result) {
       // returns watch ID to be used in clearWatch
     }, function(err) {
@@ -272,12 +295,12 @@ module.controller('DeviceMotionCtrl', function($scope, $cordovaDeviceMotion) {
 
     });
   };
-  
+
   $scope.clearWatch = function() {
 	// returns watch ID to be used in clearWatch
 
     $cordovaDeviceMotion.clearWatch(watchID).then(function(result) {
-      // Success! 
+      // Success!
     }, function(err) {
       // An error occured. Show a message to the user
 
@@ -296,13 +319,13 @@ Get access to the device's compass.
 module.controller('DeviceMotionCtrl', function($scope, $cordovaDeviceOrientation) {
   $scope.getHeading = function () {
   	$cordovaDeviceOrientation.getCurrentHeading().then(function(result) {
-      // Success! 
+      // Success!
     }, function(err) {
       // An error occured. Show a message to the user
 
     });
   };
-  
+
   $scope.watchHeading = function () {
   	var options = { frequency: 3000 }; // Update every 3 seconds
 
@@ -313,12 +336,12 @@ module.controller('DeviceMotionCtrl', function($scope, $cordovaDeviceOrientation
 
     });
   };
-  
+
   $scope.clearWatch = function() {
   	// use the watch ID from watchHeading() promise
-  	
+
     $cordovaDeviceOrientation.clearWatch(watchID).then(function(result) {
-      // Success! 
+      // Success!
     }, function(err) {
       // An error occured. Show a message to the user
 
@@ -334,7 +357,7 @@ Trigger alert, confirm, and prompt windows, or send beeps (beep, beep!)
 
 ```javascript
 module.controller('MyCtrl', function($scope, $cordovaDialogs) {
-  
+
   $cordovaDialogs.alert('Wow!');
 });
 ```
@@ -347,73 +370,73 @@ A Plugin to get access to the device's files and directories.
 
 ```javascript
 module.controller('MyCtrl', function($scope, $cordovaFile) {
-  
+
   $cordovaFile.checkDir(directory).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   // parameters: directory, replace (boolean)
   $cordovaFile.createDir(directory, false).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   $cordovaFile.checkFile(directory, file).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   // parameters: directory, file, replace (boolean)
   $cordovaFile.createFile(directory, file, true).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   $cordovaFile.removeFile(directory, file).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   // doesn't function at the moment
   $cordovaFile.writeFile(directory, file).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
+
   // Reads a file as TEXT
   $cordovaFile.readFile(directory, file).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
+
   // parameters: source, filePath, trust all hosts (boolean), options
   $cordovaFile.downloadFile(source, filePath, true, options).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   // parameters: source, filePath, options
   $cordovaFile.uploadFile(server, filePath, options).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
- 
+
 });
 ```
 
@@ -473,7 +496,7 @@ module.controller('MyCtrl', function($scope, $cordovaPush) {
     "senderID":"replace_with_sender_id",
     "ecb":"onNotification"
   };
-  
+
   var iosConfig = {
     "badge":"true",
     "sound":"true",
@@ -482,25 +505,25 @@ module.controller('MyCtrl', function($scope, $cordovaPush) {
   };
 
   $cordovaPush.register(config).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   $cordovaPush.unregister(options).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
+
   // iOS only
   $cordovaPush.setBadgeNumber(2).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
+
 });
 ```
 
@@ -513,42 +536,42 @@ Social Sharing plugin
 module.controller('MyCtrl', function($scope, $cordovaSocialSharing) {
 
   $cordovaSocialSharing.shareViaTwitter(message, image, link).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   $cordovaSocialSharing.shareViaWhatsApp(message, image, link).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   $cordovaSocialSharing.shareViaFacebook(message, image, link).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
+
   // access multiple numbers in a string like: '0612345678,0687654321'
   $cordovaSocialSharing.shareViaSMS(message, number).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
+
   // TO, CC, BCC must be an array, Files can be either null, string or array
   $cordovaSocialSharing.shareViaEmail(message, subject, toArr, bccArr, file).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
-  
-  
+
+
   $cordovaSocialSharing.canShareVia(socialType, message, image, link).then(function(result) {
-      // Success! 
+      // Success!
   }, function(err) {
       // An error occured. Show a message to the user
   });
@@ -575,20 +598,20 @@ Configure the device's StatusBar with colors and styles.
 ```javascript
 module.controller('MyCtrl', function($scope, $cordovaStatusbar) {
   $cordovaStatusbar.overlaysWebView(true);
-  
+
   // styles: Default : 0, LightContent: 1, BlackTranslucent: 2, BlackOpaque: 3
   $cordovaStatusbar.style(1);
-  
-  // supported names: black, darkGray, lightGray, white, gray, red, green, 
+
+  // supported names: black, darkGray, lightGray, white, gray, red, green,
   // blue, cyan, yellow, magenta, orange, purple, brown
   $cordovaStatusbar.styleColor('black');
-  
+
   $cordovaStatusbar.styleHex('#000');
 
   $cordovaStatusbar.hide();
 
   $cordovaStatusbar.show();
-  
+
   var isVisible = $cordovaStatusbar.isVisible();
 
 });
@@ -608,4 +631,3 @@ module.controller('MyCtrl', function($scope, $cordovaVibration) {
 
 });
 ```
-
